@@ -1,0 +1,1148 @@
+logging:
+  level:
+    root: INFO
+    "[org.springframework]": INFO
+    "[org.mongodb]": INFO
+    "[io.symphony]": TRACE
+    "[org.springframework.cloud]": INFO
+    "[org.springframework.amqp]": INFO
+
+spring:
+  jackson:
+    serialization:
+      INDENT_OUTPUT: true
+  cloud: 
+    stream:
+      function:
+        definition: publishPoint;processCommand
+      bindings:
+        publishPoint-out-0:
+          destination: status
+        processCommand-in-0:
+          destination: command
+      rabbit:
+        bindings:
+          publishPoint-out-0:
+            producer:
+              exchangeType: fanout
+          processCommand-in-0:
+            consumer:
+              exchangeType: fanout           
+        
+management:
+  endpoints:
+    web:
+      exposure:
+        include:
+        - health
+        - prometheus
+  endpoint:
+    health:
+      show-details: always
+  metrics:
+    export:
+      defaults:
+        enabled: false
+      prometheus:
+        enabled: true
+
+symphony:
+  knx:
+    name: knx
+    connection:
+      ip:
+        remoteAddress: 10.0.1.5
+        remotePort: 3671
+    points:
+
+#    # FANS
+#
+#    - id: bathroom_fan
+#      type: Switch
+#      labels:
+#        name: Bathroom Fan
+#        room: bathroom
+#        floor: firstfloor
+#        area: indoor
+#        device: fan
+#        property: power
+#      write: "7/1/0"
+#      read: 7/1/1
+#      dpt: "1.011"
+#
+#    - id: guest_bathroom_fan
+#      type: Switch
+#      labels:
+#        name: Guest Bathroom Fan
+#        room: guest_bathroom
+#        floor: firstfloor
+#        area: indoor
+#        device: fan
+#        property: power
+#      write: "7/0/0"
+#      read: 7/0/1
+#      dpt: "1.011"
+#
+#    - id: techroom_fan
+#      type: Switch
+#      labels:
+#        name: Techroom Fan
+#        room: techroom
+#        floor: groundfloor
+#        area: indoor
+#        device: fan
+#        property: power
+#      write: "7/0/2"
+#      read: 7/0/3
+#      dpt: "1.011"
+#
+#    # POWER SOCKETS
+#
+#    - id: terrace_power
+#      type: Switch
+#      labels:
+#        name: Terrace Power
+#        area: outdoor
+#        device: socket
+#        property: power
+#      write: "4/0/14"
+#      read: 4/0/15
+#      dpt: "1.001"
+#
+#    - id: garden_shed_power
+#      type: Switch
+#      labels:
+#        name: Gardenshed Fan
+#        area: outdoor
+#        device: socket
+#        property: power
+#      write: "4/0/16"
+#      read: 4/0/17
+#      dpt: "1.001"
+
+    # LIGHTS
+
+    - id: office_ceiling_light
+      type: Switch
+      labels:
+        name: Office Ceiling Light
+        room: office
+        floor: firstfloor
+        area: indoor
+        device: light
+        property: power
+      write: "0/1/14"
+      read: 0/1/15
+      dpt: "1.001"
+
+#    - id: bedroom_left_ceiling_light
+#      type: Switch
+#      labels:
+#        name: Bedroom Left Ceiling Light
+#        room: bedroom_left
+#        floor: firstfloor
+#        area: indoor
+#        device: light
+#        property: power
+#      write: "0/1/12"
+#      read: 0/1/13
+#      dpt: "1.001"
+#
+#    - id: master_bedroom_ceiling_light
+#      type: Switch
+#      labels:
+#        name: Master Bedroom Ceiling Light
+#        room: master_bedroom
+#        floor: firstfloor
+#        area: indoor
+#        device: light
+#        property: power
+#      write: "0/1/8"
+#      read: 0/1/9
+#      dpt: "1.001"
+#
+#    - id: master_bedroom_balcony_light
+#      type: Switch
+#      labels:
+#        name: Master Bedroom Balcony Light
+#        room: master_bedroom
+#        floor: firstfloor
+#        area: indoor
+#        device: light
+#        property: power
+#      write: "0/2/4"
+#      read: 0/2/5
+#      dpt: "1.001"
+#
+#    - id: bathroom_ceiling_light
+#      type: Switch
+#      labels:
+#        name: Bathroom Ceiling Light
+#        room: bathroom
+#        floor: firstfloor
+#        area: indoor
+#        device: light
+#        property: power
+#      write: "0/1/4"
+#      read: 0/1/5
+#      dpt: "1.001"
+#
+#    - id: bathroom_mirror_light
+#      type: Switch
+#      labels:
+#        name: Bathroom Mirror Light
+#        room: bathroom
+#        floor: firstfloor
+#        area: indoor
+#        device: light
+#        property: power
+#      write: "0/1/6"
+#      read: 0/1/7
+#      dpt: "1.001"
+#
+#    - id: corridor_ff_ceiling_light
+#      type: Switch
+#      labels:
+#        name: Upper Corridor Ceiling Light
+#        room: corridor
+#        floor: firstfloor
+#        area: indoor
+#        device: light
+#        property: power
+#      write: "0/1/2"
+#      read: 0/1/3
+#      dpt: "1.001"
+#
+#    - id: corridor_ff_stairs_light
+#      type: Switch
+#      labels:
+#        name: Corridor Stairs Light
+#        room: corridor
+#        floor: firstfloor
+#        area: indoor
+#        device: light
+#        property: power
+#      write: "0/1/0"
+#      read: 0/1/1
+#      dpt: "1.001"
+#
+#    - id: storeroom_ceiling_light
+#      type: Switch
+#      labels:
+#        name: Storeroom Light
+#        room: storeroom
+#        floor: firstfloor
+#        area: indoor
+#        device: light
+#        property: power
+#      write: "0/1/10"
+#      read: 0/1/11
+#      dpt: "1.001"
+#
+#    - id: guestroom_ceiling_light
+#      type: Switch
+#      labels:
+#        name: Guestroom Ceiling Light
+#        room: guestroom
+#        floor: groundfloor
+#        area: indoor
+#        device: light
+#        property: power
+#      write: "0/0/15"
+#      read: 0/0/16
+#      dpt: "1.001"
+#
+#    - id: corridor_gf_ceiling_light
+#      type: Switch
+#      labels:
+#        name: Corridor Ceiling Light
+#        room: corridor
+#        floor: groundfloor
+#        area: indoor
+#        device: light
+#        property: power
+#      write: "0/0/1"
+#      read: 0/0/2
+#      dpt: "1.001"
+#
+#    - id: guest_bathroom_ceiling_light
+#      type: Switch
+#      labels:
+#        name: Guestroom Bathroom Ceiling Light
+#        room: guest_bathroom
+#        floor: groundfloor
+#        area: indoor
+#        device: light
+#        property: power
+#      write: "0/0/1"
+#      read: 0/0/2
+#      dpt: "1.001"
+#
+#    - id: guest_bathroom_mirror_light
+#      type: Switch
+#      labels:
+#        name: Guestroom Bathroom Mirror Light
+#        room: guest_bathroom
+#        floor: groundfloor
+#        area: indoor
+#        device: light
+#        property: power
+#      write: "0/0/7"
+#      read: 0/0/8
+#      dpt: "1.001"
+#
+#    - id: techroom_ceiling_light
+#      type: Switch
+#      labels:
+#        name: Techroom Ceiling Light
+#        room: techroom
+#        floor: groundfloor
+#        area: indoor
+#        device: light
+#        property: power
+#      write: "0/0/9"
+#      read: 0/0/10
+#      dpt: "1.001"
+#
+#    - id: kitchen_ceiling_light
+#      type: Switch
+#      labels:
+#        name: Kitchen Ceiling Light
+#        room: kitchen
+#        floor: groundfloor
+#        area: indoor
+#        device: light
+#        property: power
+#      write: "0/0/11"
+#      read: 0/0/12
+#      dpt: "1.001"
+#
+#    - id: dining_table_ceiling_light
+#      type: Switch
+#      labels:
+#        name: Table Light
+#        room: livingroom
+#        floor: groundfloor
+#        area: indoor
+#        device: light
+#        property: power
+#      write: "0/0/21"
+#      read: 0/0/23
+#      dpt: "1.001"
+#
+#    - id: dining_table_ceiling_light_brightness
+#      type: Switch
+#      labels:
+#        name: Table Light Brightness
+#        room: livingroom
+#        floor: groundfloor
+#        area: indoor
+#        device: light
+#        property: brightness
+#      write: "0/0/25"
+#      read: 0/0/24
+#      dpt: "5.001"
+#
+#    - id: tv_ceiling_light
+#      type: Switch
+#      labels:
+#        name: TV Light
+#        room: livingroom
+#        floor: groundfloor
+#        area: indoor
+#        device: light
+#        property: power
+#      write: "0/0/17"
+#      read: 0/0/19
+#      dpt: "1.001"
+#
+#    - id: tv_ceiling_light_brightness
+#      type: Switch
+#      labels:
+#        name: Table Light Brightness
+#        room: livingroom
+#        floor: groundfloor
+#        area: indoor
+#        device: light
+#        property: brightness
+#      write: "0/0/26"
+#      read: 0/0/20
+#      dpt: "5.001"
+#
+#    - id: front_door_light
+#      type: Switch
+#      labels:
+#        name: Front Door Light
+#        area: outdoor
+#        device: light
+#        property: power
+#      write: "0/2/0"
+#      read: 0/2/1
+#      dpt: "1.001"
+#
+#    - id: parking_light
+#      type: Switch
+#      labels:
+#        name: Parking Light
+#        area: outdoor
+#        device: light
+#        property: power
+#      write: "0/2/2"
+#      read: 0/2/3
+#      dpt: "1.001"
+#
+#    - id: side_light
+#      type: Switch
+#      labels:
+#        name: Side Light
+#        area: outdoor
+#        device: light
+#        property: power
+#      write: "0/2/6"
+#      read: 0/2/7
+#      dpt: "1.001"
+#
+#    - id: terrace_light
+#      type: Switch
+#      labels:
+#        name: Terrace Light
+#        area: outdoor
+#        device: light
+#        property: power
+#      write: "0/2/8"
+#      read: 0/2/9
+#      dpt: "1.001"
+#
+#    # MOTION DETECTORS
+#
+#    - id: office_motion
+#      type: Motion
+#      labels:
+#        name: Office Motion
+#        room: office
+#        floor: firstfloor
+#        area: indoor
+#        device: sensor
+#        property: motion
+#      read: 8/1/0
+#      write: null
+#      dpt: "1.002"
+#      init:
+#        auto: false
+#
+#    # TEMPERATURE SENSORS
+#    - id: office_temp
+#      type: Quantity
+#      labels:
+#        name: Office Temperature
+#        room: office
+#        floor: firstfloor
+#        area: indoor
+#        device: sensor
+#        property: temperature
+#      read: 2/1/6
+#      write: null
+#      dpt: "9.001"
+#
+#    - id: bedroom_left_temp
+#      type: Quantity
+#      labels:
+#        name: Bedroom Left Temperature
+#        room: bedroom_left
+#        floor: firstfloor
+#        area: indoor
+#        device: sensor
+#        property: temperature
+#      read: 2/1/4
+#      write: null
+#      dpt: "9.001"
+#
+#    - id: master_bedroom_temp
+#      type: Quantity
+#      labels:
+#        name: Master Bedroom Temperature
+#        room: master_bedroom
+#        floor: firstfloor
+#        area: indoor
+#        device: sensor
+#        property: temperature
+#      read: 2/1/2
+#      write: null
+#      dpt: "9.001"
+#
+#    - id: bathroom_temp
+#      type: Quantity
+#      labels:
+#        name: Bathroom Temperature
+#        room: bathroom
+#        floor: firstfloor
+#        area: indoor
+#        device: sensor
+#        property: temperature
+#      read: 2/1/0
+#      write: null
+#      dpt: "9.001"
+#
+#    - id: guestroom_temp
+#      type: Quantity
+#      labels:
+#        name: Guestroom Temperature
+#        room: guestroom
+#        floor: groundfloor
+#        area: indoor
+#        device: sensor
+#        property: temperature
+#      read: 2/0/4
+#      write: null
+#      dpt: "9.001"
+#
+#    - id: guest_bathroom_temp
+#      type: Quantity
+#      labels:
+#        name: Guest Bathroom Temperature
+#        room: guest_bathroom
+#        floor: groundfloor
+#        area: indoor
+#        device: sensor
+#        property: temperature
+#      read: 2/0/0
+#      write: null
+#      dpt: "9.001"
+#
+#    - id: techroom_temp
+#      type: Quantity
+#      labels:
+#        name: Techroom Temperature
+#        room: techroom
+#        floor: groundfloor
+#        area: indoor
+#        device: sensor
+#        property: temperature
+#      read: 2/0/1
+#      write: null
+#      dpt: "9.001"
+#
+#    - id: livingroom_temp
+#      type: Quantity
+#      labels:
+#        name: Living Room Temperature
+#        room: livingroom
+#        floor: groundfloor
+#        area: indoor
+#        device: sensor
+#        property: temperature
+#      read: 2/0/2
+#      write: null
+#      dpt: "9.001"
+#
+#    # SMOKE DETECTORS
+#
+#    - id: office_smoke
+#      type: Alarm
+#      labels:
+#        name: Office Smoke
+#        room: office
+#        floor: firstfloor
+#        area: indoor
+#        device: sensor
+#        property: smoke
+#      read: 5/1/3
+#      write: null
+#      dpt: "1.005"
+#
+#    - id: bedroom_left_smoke
+#      type: Alarm
+#      labels:
+#        name: Bedroom Left Smoke
+#        room: bedroom_left
+#        floor: firstfloor
+#        area: indoor
+#        device: sensor
+#        property: smoke
+#      read: 5/1/2
+#      write: null
+#      dpt: "1.005"
+#
+#    - id: master_bedroom_smoke
+#      type: Alarm
+#      labels:
+#        name: Master Bedroom Smoke
+#        room: master_bedroom
+#        floor: firstfloor
+#        area: indoor
+#        device: sensor
+#        property: smoke
+#      read: 5/1/1
+#      write: null
+#      dpt: "1.005"
+#
+#    - id: guestroom_smoke
+#      type: Alarm
+#      labels:
+#        name: Guestroom Smoke
+#        room: guestroom
+#        floor: groundfloor
+#        area: indoor
+#        device: sensor
+#        property: smoke
+#      read: 5/0/2
+#      write: null
+#      dpt: "1.005"
+#
+#    - id: techroom_smoke
+#      type: Alarm
+#      labels:
+#        name: Techroom Smoke
+#        room: techroom
+#        floor: groundfloor
+#        area: indoor
+#        device: sensor
+#        property: smoke
+#      read: 5/0/6
+#      write: null
+#      dpt: "1.005"
+#
+#    - id: kitchen_smoke
+#      type: Alarm
+#      labels:
+#        name: Kitchen Smoke
+#        room: kitchen
+#        floor: groundfloor
+#        area: indoor
+#        device: sensor
+#        property: smoke
+#      read: 5/0/1
+#      write: null
+#      dpt: "1.005"
+#
+#    - id: livingroom_smoke
+#      type: Alarm
+#      labels:
+#        name: Living Room Smoke
+#        room: livingroom
+#        floor: groundfloor
+#        area: indoor
+#        device: sensor
+#        property: smoke
+#      read: 5/0/0
+#      write: null
+#      dpt: "1.005"
+#
+#
+#    # CONTACTS
+#
+#    - id: office_window_left
+#      type: Contact
+#      labels:
+#        name: Office Window Left
+#        room: office
+#        floor: firstfloor
+#        area: indoor
+#        device: window
+#        property: open
+#      read: 3/1/4
+#      write: null
+#      dpt: "1.009"
+#
+#    - id: office_window_right
+#      type: Contact
+#      labels:
+#        name: Office Window Right
+#        room: office
+#        floor: firstfloor
+#        area: indoor
+#        device: window
+#        property: open
+#      read: 3/1/5
+#      write: null
+#      dpt: "1.009"
+#
+#    - id: bedroom_left_window_left
+#      type: Contact
+#      labels:
+#        name: Bedroom Left Window Left
+#        room: bedroom_left
+#        floor: firstfloor
+#        area: indoor
+#        device: window
+#        property: open
+#      read: 3/1/2
+#      write: null
+#      dpt: "1.009"
+#
+#    - id: bedroom_left_window_right
+#      type: Contact
+#      labels:
+#        name: Bedroom Left Window Right
+#        room: bedroom_left
+#        floor: firstfloor
+#        area: indoor
+#        device: window
+#        property: open
+#      read: 3/1/3
+#      write: null
+#      dpt: "1.009"
+#
+#    - id: master_bedroom_balcony_door
+#      type: Contact
+#      labels:
+#        name: Master Bedroom Balcony Door
+#        room: master_bedroom
+#        floor: firstfloor
+#        area: indoor
+#        device: door
+#        property: open
+#      read: 3/1/1
+#      write: null
+#      dpt: "1.009"
+#
+#    - id: bathroom_window
+#      type: Contact
+#      labels:
+#        name: Bathroom Window
+#        room: bathroom
+#        floor: firstfloor
+#        area: indoor
+#        device: door
+#        property: open
+#      read: 3/1/0
+#      write: null
+#      dpt: "1.009"
+#
+#    - id: guestroom_window
+#      type: Contact
+#      labels:
+#        name: Guestroom Window
+#        room: guestroom
+#        floor: groundfloor
+#        area: indoor
+#        device: window
+#        property: open
+#      read: 3/0/5
+#      write: null
+#      dpt: "1.009"
+#
+#    - id: guestroom_bathroom_window
+#      type: Contact
+#      labels:
+#        name: Guestroom Bathroom Window
+#        room: guestroom
+#        floor: groundfloor
+#        area: indoor
+#        device: window
+#        property: open
+#      read: 3/0/0
+#      write: null
+#      dpt: "1.009"
+#
+#    - id: kitchen_side_door
+#      type: Contact
+#      labels:
+#        name: Kitchen Side Door
+#        room: kitchen
+#        floor: groundfloor
+#        area: indoor
+#        device: door
+#        property: open
+#      read: 3/0/4
+#      write: null
+#      dpt: "1.009"
+#
+#    - id: livingroom_terrace_door
+#      type: Contact
+#      labels:
+#        name: Living Room Terrace Door
+#        room: livingroom
+#        floor: groundfloor
+#        area: indoor
+#        device: door
+#        property: open
+#      read: 3/0/1
+#      write: null
+#      dpt: "1.009"
+#
+#    - id: livingroom_window
+#      type: Contact
+#      labels:
+#        name: Living Room Window
+#        room: livingroom
+#        floor: groundfloor
+#        area: indoor
+#        device: window
+#        property: open
+#      read: 3/0/2
+#      write: null
+#      dpt: "1.009"
+#
+#    # SHUTTERS
+#
+#    - id: office_shutter_direction
+#      type: VerticalDirection
+#      labels:
+#        name: Office Shutter Direction
+#        room: office
+#        floor: firstfloor
+#        area: indoor
+#        device: rollershutter
+#        property: position
+#      read: null
+#      write: 1/1/9
+#      dpt: "1.008"
+#
+#    - id: office_shutter_pos
+#      type: Quantity
+#      labels:
+#        name: Office Shutter Position
+#        room: office
+#        floor: firstfloor
+#        area: indoor
+#        device: rollershutter
+#        property: position_abs
+#      read: 1/1/11
+#      write: 1/1/12
+#      dpt: "5.001"
+#
+#
+#    - id: bedroom_left_shutter_direction
+#      type: VerticalDirection
+#      labels:
+#        name: Bedroom Left Shutter Direction
+#        room: bedroom_left
+#        floor: firstfloor
+#        area: indoor
+#        device: rollershutter
+#        property: position
+#      read: null
+#      write: 1/1/6
+#      dpt: "1.008"
+#
+#    - id: bedroom_left_shutter_pos
+#      type: Quantity
+#      labels:
+#        name: Bedroom Left Shutter Position
+#        room: bedroom_left
+#        floor: firstfloor
+#        area: indoor
+#        device: rollershutter
+#        property: position_abs
+#      read: 1/1/8
+#      write: 1/1/15
+#      dpt: "5.001"
+#
+#
+#    - id: master_bedroom_shutter_direction
+#      type: VerticalDirection
+#      labels:
+#        name: Master Bedroom Shutter Direction
+#        room: master_bedroom
+#        floor: firstfloor
+#        area: indoor
+#        device: rollershutter
+#        property: position
+#      read: null
+#      write: 1/1/3
+#      dpt: "1.008"
+#
+#    - id: master_bedroom_shutter_pos
+#      type: Quantity
+#      labels:
+#        name: Master Bedroom Shutter Position
+#        room: master_bedroom
+#        floor: firstfloor
+#        area: indoor
+#        device: rollershutter
+#        property: position_abs
+#      read: 1/1/5
+#      write: 1/1/13
+#      dpt: "5.001"
+#
+#
+#    - id: bathroom_shutter_direction
+#      type: VerticalDirection
+#      labels:
+#        name: Bathroom Shutter Direction
+#        room: bathroom
+#        floor: firstfloor
+#        area: indoor
+#        device: rollershutter
+#        property: position
+#      read: null
+#      write: 1/1/0
+#      dpt: "1.008"
+#
+#    - id: bathroom_shutter_pos
+#      type: Quantity
+#      labels:
+#        name: Bathroom Shutter Position
+#        room: bathroom
+#        floor: firstfloor
+#        area: indoor
+#        device: rollershutter
+#        property: position_abs
+#      read: 1/1/2
+#      write: 1/1/14
+#      dpt: "5.001"
+#
+#
+#    - id: guestroom_shutter_direction
+#      type: VerticalDirection
+#      labels:
+#        name: Guestroom Shutter Direction
+#        room: guestroom
+#        floor: groundfloor
+#        area: indoor
+#        device: rollershutter
+#        property: position
+#      read: null
+#      write: 1/0/3
+#      dpt: "1.008"
+#
+#    - id: guestroom_shutter_pos
+#      type: Quantity
+#      labels:
+#        name: Guestroom Shutter Position
+#        room: guestroom
+#        floor: groundfloor
+#        area: indoor
+#        device: rollershutter
+#        property: position_abs
+#      read: 1/0/5
+#      write: 1/0/23
+#      dpt: "5.001"
+#
+#
+#    - id: guest_bathroom_shutter_direction
+#      type: VerticalDirection
+#      labels:
+#        name: Guest Bathroom Shutter Direction
+#        room: guestroom
+#        floor: groundfloor
+#        area: indoor
+#        device: rollershutter
+#        property: position
+#      read: null
+#      write: 1/0/0
+#      dpt: "1.008"
+#
+#    - id: guest_bathroom_shutter_pos
+#      type: Quantity
+#      labels:
+#        name: Guest Bathroom Shutter Position
+#        room: guestroom
+#        floor: groundfloor
+#        area: indoor
+#        device: rollershutter
+#        property: position_abs
+#      read: 1/0/2
+#      write: 1/0/21
+#      dpt: "5.001"
+#
+#
+#    - id: kitchen_shutter_direction
+#      type: VerticalDirection
+#      labels:
+#        name: Kitchen Shutter Direction
+#        room: kitchen
+#        floor: groundfloor
+#        area: indoor
+#        device: rollershutter
+#        property: position
+#      read: null
+#      write: 1/0/6
+#      dpt: "1.008"
+#
+#    - id: kitchen_shutter_pos
+#      type: Quantity
+#      labels:
+#        name: Kitchen Shutter Position
+#        room: kitchen
+#        floor: groundfloor
+#        area: indoor
+#        device: rollershutter
+#        property: position_abs
+#      read: 1/0/8
+#      write: 1/0/22
+#      dpt: "5.001"
+#
+#
+#    - id: livingroom_west_shutter_direction
+#      type: VerticalDirection
+#      labels:
+#        name: Livingroom Shutter Direction
+#        room: livingroom
+#        floor: groundfloor
+#        area: indoor
+#        device: rollershutter
+#        property: position
+#      read: null
+#      write: 1/0/9
+#      dpt: "1.008"
+#
+#    - id: livingroom_west_shutter_pos
+#      type: Quantity
+#      labels:
+#        name: Livingroom Shutter Position
+#        room: livingroom
+#        floor: groundfloor
+#        area: indoor
+#        device: rollershutter
+#        property: position_abs
+#      read: 1/0/11
+#      write: 1/0/20
+#      dpt: "5.001"
+#
+#
+#    - id: livingroom_north_shutter_direction
+#      type: VerticalDirection
+#      labels:
+#        name: Livingroom North Shutter Direction
+#        room: livingroom
+#        floor: groundfloor
+#        area: indoor
+#        device: rollershutter
+#        property: position
+#      read: null
+#      write: 1/0/12
+#      dpt: "1.008"
+#
+#    - id: livingroom_north_shutter_pos
+#      type: Quantity
+#      labels:
+#        name: Livingroom North Shutter Position
+#        room: livingroom
+#        floor: groundfloor
+#        area: indoor
+#        device: rollershutter
+#        property: position_abs
+#      read: 1/0/14
+#      write: 1/0/18
+#      dpt: "5.001"
+#
+#
+#    - id: livingroom_tv_shutter_direction
+#      type: VerticalDirection
+#      labels:
+#        name: Livingroom TV Shutter Direction
+#        room: livingroom
+#        floor: groundfloor
+#        area: indoor
+#        device: rollershutter
+#        property: position
+#      read: null
+#      write: 1/0/15
+#      dpt: "1.008"
+#
+#    - id: livingroom_tv_shutter_pos
+#      type: Quantity
+#      labels:
+#        name: Livingroom TV Shutter Position
+#        room: livingroom
+#        floor: groundfloor
+#        area: indoor
+#        device: rollershutter
+#        property: position_abs
+#      read: 1/0/17
+#      write: 1/0/10
+#      dpt: "5.001"
+#
+#    # WEATHER & ENVIRONMENT
+#
+#    - id: windspeed
+#      type: Quantity
+#      labels:
+#        name: Windspeed
+#        area: outdoor
+#        device: weather
+#        property: windspeed
+#      read: 10/1/1
+#      write: null
+#      dpt: "9.005"
+#
+#    - id: windalarm
+#      type: Alarm
+#      labels:
+#        name: Wind Alarm
+#        area: outdoor
+#        device: weather
+#        property: windalarm
+#      read: 10/1/0
+#      write: null
+#      dpt: "1.001"
+#
+#    - id: outdoor_temperature_north
+#      type: Quantity
+#      labels:
+#        name: Outdoor Temperature North
+#        area: outdoor
+#        device: weather
+#        property: temperature
+#      read: 10/2/0
+#      write: null
+#      dpt: "9.001"
+#
+#    - id: outdoor_brightness_north
+#      type: Quantity
+#      labels:
+#        name: Outdoor Brightness North
+#        area: outdoor
+#        device: weather
+#        property: brightness
+#      read: 10/1/3
+#      write: null
+#      dpt: "9.004"
+#
+#    - id: outdoor_brightness_west
+#      type: Quantity
+#      labels:
+#        name: Outdoor Brightness West
+#        area: outdoor
+#        device: weather
+#        property: brightness
+#      read: 10/1/6
+#      write: null
+#      dpt: "9.004"
+#
+#    - id: outdoor_brightness_south
+#      type: Quantity
+#      labels:
+#        name: Outdoor Brightness South
+#        area: outdoor
+#        device: weather
+#        property: brightness
+#      read: 10/1/7
+#      write: null
+#      dpt: "9.004"
+#
+#    # LEAKAGE SENSORS
+#
+#    - id: kitchen_leakage
+#      type: Alarm
+#      labels:
+#        name: Kitchen Leakage
+#        room: kitchen
+#        floor: groundfloor
+#        area: indoor
+#        device: sensor
+#        property: water
+#      read: "6/0/2"
+#      write: null
+#      dpt: "1.005"
+#      init:
+#        auto: false
+#        value: NO_ALARM
+#
+#    - id: techroom_leakage
+#      type: Alarm
+#      labels:
+#        name: Techroom Leakage
+#        room: techroom
+#        floor: groundfloor
+#        area: indoor
+#        device: sensor
+#        property: water
+#      read: "6/0/0"
+#      write: null
+#      dpt: "1.005"
+#      init:
+#        auto: false
+#        value: NO_ALARM

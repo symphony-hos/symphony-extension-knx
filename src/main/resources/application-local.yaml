@@ -1,0 +1,16 @@
+server:
+  port: 8090
+
+spring:
+  data:
+    mongodb:
+      port: 27018
+      host: 127.0.0.1
+      username: symphony-knx
+      password: symphony-knx
+      database: symphony-knx
+      authentication-database: symphony-knx
+  rabbitmq:
+    host: 127.0.0.1
+    username: rabbitmq
+    password: rabbitmq
